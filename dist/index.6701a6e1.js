@@ -22747,7 +22747,6 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
-let imgPath = './img';
 class MainView extends _reactDefault.default.Component {
     constructor(){
         super();
@@ -22757,7 +22756,7 @@ class MainView extends _reactDefault.default.Component {
                     _id: 1,
                     Title: 'Pulp Fiction',
                     Description: 'Two hitmen get involved with a powerful gangster, his overdosing girlfriend, and a desperate boxer in a chain of violence and redemption.',
-                    ImagePath: imgPath + 'pulpfiction.jpg',
+                    ImagePath: 'https://a.1stdibscdn.com/archivesE/upload/10267513/f_110820711528991424980/1_org_53__master.jpg',
                     Genre: 'Comedy Drama',
                     Director: 'Quentin Tarantino'
                 },
@@ -22765,7 +22764,7 @@ class MainView extends _reactDefault.default.Component {
                     _id: 2,
                     Title: 'The Grand Budapest Hotel',
                     Description: 'The owner of an aging high-class hotel retells his early life adventures serving as the hotels concierge with a lobby boy who becomes his closest confidant. The story involves the theft and recovery of a renaissance painting, and a tense battle of a large family fortune, all during a growing fascist regime.',
-                    ImagePath: imgPath + 'grandbudapesthotel.jpg',
+                    ImagePath: 'https://m.media-amazon.com/images/I/51G-6nEIH8L._AC_.jpg',
                     Genre: 'Comedy Drama',
                     Director: 'Wes Anderson'
                 },
@@ -22773,7 +22772,7 @@ class MainView extends _reactDefault.default.Component {
                     _id: 3,
                     Title: 'The Lord of the Rings: The Return of the King',
                     Description: 'Continuing the plot of The Fellowship of the Ring, and The Two Towers, Frodo, Sam, and Gollum venture to Mordor to destroy the One Ring. Gandalf and Aragorn lead their joining forces against Saurons evil army in Minas Tirith.',
-                    ImagePath: imgPath + 'pulpfiction.jpg',
+                    ImagePath: 'https://m.media-amazon.com/images/I/71X6YzwV0gL._AC_SY679_.jpg',
                     Genre: 'Fantasy Adventure',
                     Director: 'Peter Jackson'
                 }
@@ -22793,7 +22792,7 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 34
+                lineNumber: 32
             },
             __self: this,
             children: "The list is empty!"
@@ -22802,7 +22801,7 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 37
+                lineNumber: 35
             },
             __self: this,
             children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -22812,7 +22811,7 @@ class MainView extends _reactDefault.default.Component {
                 },
                 __source: {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 39
+                    lineNumber: 37
                 },
                 __self: this
             }) : movies.map((movie)=>/*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
@@ -22822,7 +22821,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 41
+                        lineNumber: 39
                     },
                     __self: this
                 }, movie._id)
@@ -23052,7 +23051,6 @@ class MovieView extends _reactDefault.default.Component {
             __self: this,
             children: [
                 /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                    className: "movie-poster",
                     __source: {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 10
@@ -23060,6 +23058,8 @@ class MovieView extends _reactDefault.default.Component {
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
                         src: movie.ImagePath,
+                        crossOrigin: "anoymous",
+                        className: "movie-poster",
                         __source: {
                             fileName: "src/components/movie-view/movie-view.jsx",
                             lineNumber: 11
