@@ -15,6 +15,7 @@ export function RegistrationView(props) {
     const isReq = validate();
     if (isReq) {
       /* Send request to the server for authentication */
+
       axios.post('https://myflixapi-0196.herokuapp.com/users', {
         Username: username,
         Password: password,
@@ -109,3 +110,12 @@ export function RegistrationView(props) {
 
   );
 }
+
+RegistrationView.propTypes = {
+  register: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+  }),
+  onRegistration: PropTypes.func,
+};
