@@ -25,7 +25,5 @@
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2"
   },
-  "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-rc.0"
-  }
+  "devDependencies": {}
 }
