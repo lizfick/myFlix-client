@@ -22752,11 +22752,18 @@ parcelHelpers.export(exports, "MainView", ()=>MainView
 );
 var _jsxRuntime = require("react/jsx-runtime");
 // myFlix-client/src/main-view/main-view.jsx
+// app
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+// styling
 var _mainViewScss = require("./main-view.scss");
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+// components
 var _loginView = require("../login-view/login-view");
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
@@ -22800,7 +22807,7 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 54
+                lineNumber: 57
             },
             __self: this
         }));
@@ -22809,7 +22816,7 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 57
+                lineNumber: 60
             },
             __self: this
         }));
@@ -22817,21 +22824,21 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 60
+                lineNumber: 63
             },
             __self: this,
-            children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(Row, {
+            children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                 className: "justify-content-md-center",
                 __source: {
                     fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                    lineNumber: 64
+                    lineNumber: 67
                 },
                 __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(Col, {
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                     md: 8,
                     __source: {
                         fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                        lineNumber: 65
+                        lineNumber: 68
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -22841,7 +22848,7 @@ class MainView extends _reactDefault.default.Component {
                         },
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                            lineNumber: 66
+                            lineNumber: 69
                         },
                         __self: this
                     })
@@ -22853,7 +22860,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                        lineNumber: 71
+                        lineNumber: 74
                     },
                     __self: this
                 }, movie._id)
@@ -22868,7 +22875,7 @@ exports.default = MainView;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"d3MWU","react":"azLUo","axios":"6hREr","./main-view.scss":"dKPAQ","../login-view/login-view":"6HVjc","../movie-card/movie-card":"3gjCh","../movie-view/movie-view":"7WbPe","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"6hREr":[function(require,module,exports) {
+},{"react/jsx-runtime":"d3MWU","react":"azLUo","axios":"6hREr","./main-view.scss":"dKPAQ","../login-view/login-view":"6HVjc","../movie-card/movie-card":"3gjCh","../movie-view/movie-view":"7WbPe","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP","react-bootstrap/Row":"iMtLt","react-bootstrap/Col":"h3pDE"}],"6hREr":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 
 },{"./lib/axios":"2f5Gv"}],"2f5Gv":[function(require,module,exports) {
@@ -37303,6 +37310,11 @@ class MovieCard extends _reactDefault.default.Component {
                 /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
                     variant: "top",
                     src: movie.ImagePath,
+                    crossOrigin: "anoymous",
+                    className: "movie-poster",
+                    style: {
+                        width: '100px'
+                    },
                     __source: {
                         fileName: "Documents/careerfoundry/myFlix-client/src/components/movie-card/movie-card.jsx",
                         lineNumber: 12
