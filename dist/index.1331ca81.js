@@ -980,7 +980,7 @@ _reactDomDefault.default.render(/*#__PURE__*/ _reactDefault.default.createElemen
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"d3MWU","react":"azLUo","react-dom":"c5WwX","./components/main-view/main-view":"5QX01","./index.scss":"bTGvG","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP","react-bootstrap/Container":"b24yh"}],"d3MWU":[function(require,module,exports) {
+},{"react/jsx-runtime":"d3MWU","react":"azLUo","react-dom":"c5WwX","./components/main-view/main-view":"5QX01","react-bootstrap/Container":"b24yh","./index.scss":"bTGvG","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"d3MWU":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-runtime.development.js');
 
@@ -22778,6 +22778,15 @@ class MainView extends _reactDefault.default.Component {
         };
     }
     componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
+            this.setState({
+                user: localStorage.getItem('user')
+            });
+            this.getMovies(accessToken);
+        }
+    }
+    componentDidMount() {
         _axiosDefault.default.get('https://myflixapi-0196.herokuapp.com/movies').then((response)=>{
             this.setState({
                 movies: response.data
@@ -22792,10 +22801,34 @@ class MainView extends _reactDefault.default.Component {
             selectedMovie: movie
         });
     }
-    // when a user successfully logs in, this function updates the 'user' property instate to that particular user
-    onLoggedIn(user) {
+    onLoggedIn(authData) {
+        console.log(authData);
         this.setState({
-            user
+            user: authData.user.Username
+        });
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authData.user.Username);
+        this.getMovies(authData.token);
+    }
+    onLoggedOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+            user: null
+        });
+    }
+    getMovies(token) {
+        _axiosDefault.default.get('https://myflixapi-0196.herokuapp.com/movies', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            // Assign the result to the state
+            this.setState({
+                movies: response.data
+            });
+        }).catch(function(error) {
+            console.log(error);
         });
     }
     // controls what the component displays
@@ -22807,7 +22840,7 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 57
+                lineNumber: 94
             },
             __self: this
         }));
@@ -22816,29 +22849,40 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 60
+                lineNumber: 97
             },
             __self: this
         }));
+        /*#__PURE__*/ _jsxRuntime.jsx("button", {
+            onClick: ()=>{
+                this.onLoggedOut();
+            },
+            __source: {
+                fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
+                lineNumber: 99
+            },
+            __self: this,
+            children: "Logout"
+        });
         return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
             className: "main-view",
             __source: {
                 fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                lineNumber: 63
+                lineNumber: 102
             },
             __self: this,
             children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                 className: "justify-content-md-center",
                 __source: {
                     fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                    lineNumber: 67
+                    lineNumber: 106
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                     md: 8,
                     __source: {
                         fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                        lineNumber: 68
+                        lineNumber: 107
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -22848,7 +22892,7 @@ class MainView extends _reactDefault.default.Component {
                         },
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                            lineNumber: 69
+                            lineNumber: 108
                         },
                         __self: this
                     })
@@ -22860,7 +22904,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "Documents/careerfoundry/myFlix-client/src/components/main-view/main-view.jsx",
-                        lineNumber: 74
+                        lineNumber: 113
                     },
                     __self: this
                 }, movie._id)
@@ -22875,7 +22919,7 @@ exports.default = MainView;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"d3MWU","react":"azLUo","axios":"6hREr","./main-view.scss":"dKPAQ","../login-view/login-view":"6HVjc","../movie-card/movie-card":"3gjCh","../movie-view/movie-view":"7WbPe","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP","react-bootstrap/Row":"iMtLt","react-bootstrap/Col":"h3pDE"}],"6hREr":[function(require,module,exports) {
+},{"react/jsx-runtime":"d3MWU","react":"azLUo","axios":"6hREr","./main-view.scss":"dKPAQ","react-bootstrap/Row":"iMtLt","react-bootstrap/Col":"h3pDE","../login-view/login-view":"6HVjc","../movie-card/movie-card":"3gjCh","../movie-view/movie-view":"7WbPe","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"6hREr":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 
 },{"./lib/axios":"2f5Gv"}],"2f5Gv":[function(require,module,exports) {
@@ -24434,7 +24478,232 @@ var utils = require('./../utils');
     return utils.isObject(payload) && payload.isAxiosError === true;
 };
 
-},{"./../utils":"jqwHK"}],"dKPAQ":[function() {},{}],"6HVjc":[function(require,module,exports) {
+},{"./../utils":"jqwHK"}],"dKPAQ":[function() {},{}],"iMtLt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const DEVICE_SIZES = [
+    'xxl',
+    'xl',
+    'lg',
+    'md',
+    'sm',
+    'xs'
+];
+const Row = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div' , ...props }, ref)=>{
+    const decoratedBsPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'row');
+    const sizePrefix = `${decoratedBsPrefix}-cols`;
+    const classes = [];
+    DEVICE_SIZES.forEach((brkPoint)=>{
+        const propValue = props[brkPoint];
+        delete props[brkPoint];
+        let cols;
+        if (propValue != null && typeof propValue === 'object') ({ cols  } = propValue);
+        else cols = propValue;
+        const infix = brkPoint !== 'xs' ? `-${brkPoint}` : '';
+        if (cols != null) classes.push(`${sizePrefix}${infix}-${cols}`);
+    });
+    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ref: ref,
+        ...props,
+        className: _classnamesDefault.default(className, decoratedBsPrefix, ...classes)
+    }));
+});
+Row.displayName = 'Row';
+exports.default = Row;
+
+},{"classnames":"6c3Gk","react":"azLUo","./ThemeProvider":"d8Vr0","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"6c3Gk":[function(require,module,exports) {
+(function() {
+    var hasOwn = {
+    }.hasOwnProperty;
+    function classNames() {
+        var classes = [];
+        for(var i = 0; i < arguments.length; i++){
+            var arg = arguments[i];
+            if (!arg) continue;
+            var argType = typeof arg;
+            if (argType === 'string' || argType === 'number') classes.push(arg);
+            else if (Array.isArray(arg)) {
+                if (arg.length) {
+                    var inner = classNames.apply(null, arg);
+                    if (inner) classes.push(inner);
+                }
+            } else if (argType === 'object') {
+                if (arg.toString === Object.prototype.toString) {
+                    for(var key in arg)if (hasOwn.call(arg, key) && arg[key]) classes.push(key);
+                } else classes.push(arg.toString());
+            }
+        }
+        return classes.join(' ');
+    }
+    if (typeof module !== 'undefined' && module.exports) {
+        classNames.default = classNames;
+        module.exports = classNames;
+    } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) // register as 'classnames', consistent with npm package name
+    define('classnames', [], function() {
+        return classNames;
+    });
+    else window.classNames = classNames;
+})();
+
+},{}],"d8Vr0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useBootstrapPrefix", ()=>useBootstrapPrefix
+);
+parcelHelpers.export(exports, "useIsRTL", ()=>useIsRTL
+);
+parcelHelpers.export(exports, "createBootstrapComponent", ()=>createBootstrapComponent
+);
+parcelHelpers.export(exports, "ThemeConsumer", ()=>Consumer
+);
+var _react = require("react");
+var _jsxRuntime = require("react/jsx-runtime");
+const ThemeContext = /*#__PURE__*/ _react.createContext({
+    prefixes: {
+    }
+});
+const { Consumer , Provider  } = ThemeContext;
+function ThemeProvider({ prefixes ={
+} , dir , children  }) {
+    const contextValue = _react.useMemo(()=>({
+            prefixes: {
+                ...prefixes
+            },
+            dir
+        })
+    , [
+        prefixes,
+        dir
+    ]);
+    return(/*#__PURE__*/ _jsxRuntime.jsx(Provider, {
+        value: contextValue,
+        children: children
+    }));
+}
+function useBootstrapPrefix(prefix, defaultPrefix) {
+    const { prefixes  } = _react.useContext(ThemeContext);
+    return prefix || prefixes[defaultPrefix] || defaultPrefix;
+}
+function useIsRTL() {
+    const { dir  } = _react.useContext(ThemeContext);
+    return dir === 'rtl';
+}
+function createBootstrapComponent(Component, opts) {
+    if (typeof opts === 'string') opts = {
+        prefix: opts
+    };
+    const isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
+    const { prefix , forwardRefAs =isClassy ? 'ref' : 'innerRef'  } = opts;
+    const Wrapped = /*#__PURE__*/ _react.forwardRef(({ ...props }, ref)=>{
+        props[forwardRefAs] = ref;
+        const bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
+        return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
+            ...props,
+            bsPrefix: bsPrefix
+        }));
+    });
+    Wrapped.displayName = `Bootstrap(${Component.displayName || Component.name})`;
+    return Wrapped;
+}
+exports.default = ThemeProvider;
+
+},{"react":"azLUo","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"eg80C":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule') return;
+        // Skip duplicate re-exports when they have the same value.
+        if (key in dest && dest[key] === source[key]) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"h3pDE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useCol", ()=>useCol
+);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const DEVICE_SIZES = [
+    'xxl',
+    'xl',
+    'lg',
+    'md',
+    'sm',
+    'xs'
+];
+function useCol({ as , bsPrefix , className , ...props }) {
+    bsPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'col');
+    const spans = [];
+    const classes = [];
+    DEVICE_SIZES.forEach((brkPoint)=>{
+        const propValue = props[brkPoint];
+        delete props[brkPoint];
+        let span;
+        let offset;
+        let order;
+        if (typeof propValue === 'object' && propValue != null) ({ span , offset , order  } = propValue);
+        else span = propValue;
+        const infix = brkPoint !== 'xs' ? `-${brkPoint}` : '';
+        if (span) spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
+        if (order != null) classes.push(`order${infix}-${order}`);
+        if (offset != null) classes.push(`offset${infix}-${offset}`);
+    });
+    return [
+        {
+            ...props,
+            className: _classnamesDefault.default(className, ...spans, ...classes)
+        },
+        {
+            as,
+            bsPrefix,
+            spans
+        }
+    ];
+}
+const Col = /*#__PURE__*/ _react.forwardRef((props, ref)=>{
+    const [{ className , ...colProps }, { as: Component = 'div' , bsPrefix , spans  }] = useCol(props);
+    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ...colProps,
+        ref: ref,
+        className: _classnamesDefault.default(className, !spans.length && bsPrefix)
+    }));
+});
+Col.displayName = 'Col';
+exports.default = Col;
+
+},{"classnames":"6c3Gk","react":"azLUo","./ThemeProvider":"d8Vr0","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"6HVjc":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$8f60 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -24451,31 +24720,61 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _propTypes = require("prop-types");
 var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactBootstrap = require("react-bootstrap");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _loginViewScss = require("./login-view.scss");
 var _s = $RefreshSig$();
 function LoginView(props) {
     _s();
     const [username, setUsername] = _react.useState('');
     const [password, setPassword] = _react.useState('');
+    // Declare hook for each input
+    const [usernameErr, setUsernameErr] = _react.useState('');
+    const [passwordErr, setPasswordErr] = _react.useState('');
+    // validate user inputs
+    const validate = ()=>{
+        let isReq = true;
+        if (!username) {
+            setUsernameErr('Username Required');
+            isReq = false;
+        } else if (username.length < 2) {
+            setUsernameErr('Username must be 2 characters long');
+            isReq = false;
+        }
+        if (!password) {
+            setPasswordErr('Password Required');
+            isReq = false;
+        } else if (password.length < 6) {
+            setPassword('Password must be 6 characters long');
+            isReq = false;
+        }
+        return isReq;
+    };
     const handleSubmit = (e)=>{
         e.preventDefault();
-        console.log(username, password);
-        // Send a request to the server for authentication, then call props.onLoggedIn(username)
-        props.onLoggedIn(username);
+        /* send a requst to the server for authentication */ _axiosDefault.default.post('https://myflixapi-0196.herokuapp.com/login', {
+            Username: username,
+            Password: password
+        }).then((response)=>{
+            const data = response.data;
+            props.onLoggedIn(data);
+        }).catch((e1)=>{
+            console.log('no such user');
+        });
     };
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_jsxRuntime.Fragment, {
         children: [
             /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                 __source: {
                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                    lineNumber: 21
+                    lineNumber: 55
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx("h1", {
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 22
+                            lineNumber: 56
                         },
                         __self: this,
                         children: "Welcome to myFlix!"
@@ -24483,7 +24782,7 @@ function LoginView(props) {
                     /*#__PURE__*/ _jsxRuntime.jsx("p", {
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 23
+                            lineNumber: 57
                         },
                         __self: this,
                         children: "Please Log In"
@@ -24493,7 +24792,7 @@ function LoginView(props) {
             /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form, {
                 __source: {
                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                    lineNumber: 25
+                    lineNumber: 59
                 },
                 __self: this,
                 children: [
@@ -24501,14 +24800,14 @@ function LoginView(props) {
                         controlId: "formUsername",
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 26
+                            lineNumber: 60
                         },
                         __self: this,
                         children: [
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
                                 __source: {
                                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                                    lineNumber: 27
+                                    lineNumber: 61
                                 },
                                 __self: this,
                                 children: "Username:"
@@ -24519,7 +24818,7 @@ function LoginView(props) {
                                 ,
                                 __source: {
                                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                                    lineNumber: 28
+                                    lineNumber: 62
                                 },
                                 __self: this
                             })
@@ -24529,14 +24828,14 @@ function LoginView(props) {
                         controlId: "formPassword",
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 31
+                            lineNumber: 65
                         },
                         __self: this,
                         children: [
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
                                 __source: {
                                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                                    lineNumber: 32
+                                    lineNumber: 66
                                 },
                                 __self: this,
                                 children: "Password:"
@@ -24547,7 +24846,7 @@ function LoginView(props) {
                                 ,
                                 __source: {
                                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                                    lineNumber: 33
+                                    lineNumber: 67
                                 },
                                 __self: this
                             })
@@ -24560,7 +24859,7 @@ function LoginView(props) {
                         onClick: handleSubmit,
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 35
+                            lineNumber: 69
                         },
                         __self: this,
                         children: "Log In"
@@ -24570,21 +24869,21 @@ function LoginView(props) {
             /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                 __source: {
                     fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                    lineNumber: 39
+                    lineNumber: 73
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx("br", {
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 39
+                            lineNumber: 73
                         },
                         __self: this
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsx("span", {
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 40
+                            lineNumber: 74
                         },
                         __self: this,
                         children: "Need to create an account?"
@@ -24592,7 +24891,7 @@ function LoginView(props) {
                     /*#__PURE__*/ _jsxRuntime.jsx("br", {
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 40
+                            lineNumber: 74
                         },
                         __self: this
                     }),
@@ -24600,7 +24899,7 @@ function LoginView(props) {
                         type: "submit",
                         __source: {
                             fileName: "Documents/careerfoundry/myFlix-client/src/components/login-view/login-view.jsx",
-                            lineNumber: 41
+                            lineNumber: 75
                         },
                         __self: this,
                         children: "Register Here"
@@ -24610,7 +24909,7 @@ function LoginView(props) {
         ]
     }));
 }
-_s(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
+_s(LoginView, "OE8YjcJGIuyxg6F5muZvwXJgQUc=");
 _c = LoginView;
 LoginView.propTypes = {
     user: _propTypesDefault.default.shape({
@@ -24627,7 +24926,7 @@ $RefreshReg$(_c, "LoginView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"d3MWU","react":"azLUo","prop-types":"iSfL2","react-bootstrap":"2v98f","./login-view.scss":"fa77M","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"iSfL2":[function(require,module,exports) {
+},{"react/jsx-runtime":"d3MWU","react":"azLUo","prop-types":"iSfL2","react-bootstrap":"2v98f","axios":"6hREr","./login-view.scss":"fa77M","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"iSfL2":[function(require,module,exports) {
 var ReactIs = require('react-is');
 // By explicitly using `prop-types` you are opting into new development behavior.
 // http://fb.me/prop-types-in-prod
@@ -25714,41 +26013,7 @@ exports.default = Object.assign(Accordion, {
     Body: _accordionBodyDefault.default
 });
 
-},{"classnames":"6c3Gk","react":"azLUo","uncontrollable":"8pQEA","./ThemeProvider":"d8Vr0","./AccordionBody":"eKf1H","./AccordionButton":"gwUb7","./AccordionCollapse":"c834E","./AccordionContext":"fSSsd","./AccordionHeader":"6raQL","./AccordionItem":"3CVPx","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"6c3Gk":[function(require,module,exports) {
-(function() {
-    var hasOwn = {
-    }.hasOwnProperty;
-    function classNames() {
-        var classes = [];
-        for(var i = 0; i < arguments.length; i++){
-            var arg = arguments[i];
-            if (!arg) continue;
-            var argType = typeof arg;
-            if (argType === 'string' || argType === 'number') classes.push(arg);
-            else if (Array.isArray(arg)) {
-                if (arg.length) {
-                    var inner = classNames.apply(null, arg);
-                    if (inner) classes.push(inner);
-                }
-            } else if (argType === 'object') {
-                if (arg.toString === Object.prototype.toString) {
-                    for(var key in arg)if (hasOwn.call(arg, key) && arg[key]) classes.push(key);
-                } else classes.push(arg.toString());
-            }
-        }
-        return classes.join(' ');
-    }
-    if (typeof module !== 'undefined' && module.exports) {
-        classNames.default = classNames;
-        module.exports = classNames;
-    } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) // register as 'classnames', consistent with npm package name
-    define('classnames', [], function() {
-        return classNames;
-    });
-    else window.classNames = classNames;
-})();
-
-},{}],"8pQEA":[function(require,module,exports) {
+},{"classnames":"6c3Gk","react":"azLUo","uncontrollable":"8pQEA","./ThemeProvider":"d8Vr0","./AccordionBody":"eKf1H","./AccordionButton":"gwUb7","./AccordionCollapse":"c834E","./AccordionContext":"fSSsd","./AccordionHeader":"6raQL","./AccordionItem":"3CVPx","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"8pQEA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "useUncontrolled", ()=>_hookDefault.default
@@ -25841,39 +26106,7 @@ function _extends() {
 }
 exports.default = _extends;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"eg80C":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule') return;
-        // Skip duplicate re-exports when they have the same value.
-        if (key in dest && dest[key] === source[key]) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"fZkWs":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"fZkWs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function _objectWithoutPropertiesLoose(source, excluded) {
@@ -26258,69 +26491,7 @@ function polyfill(Component) {
     return Component;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"d8Vr0":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "useBootstrapPrefix", ()=>useBootstrapPrefix
-);
-parcelHelpers.export(exports, "useIsRTL", ()=>useIsRTL
-);
-parcelHelpers.export(exports, "createBootstrapComponent", ()=>createBootstrapComponent
-);
-parcelHelpers.export(exports, "ThemeConsumer", ()=>Consumer
-);
-var _react = require("react");
-var _jsxRuntime = require("react/jsx-runtime");
-const ThemeContext = /*#__PURE__*/ _react.createContext({
-    prefixes: {
-    }
-});
-const { Consumer , Provider  } = ThemeContext;
-function ThemeProvider({ prefixes ={
-} , dir , children  }) {
-    const contextValue = _react.useMemo(()=>({
-            prefixes: {
-                ...prefixes
-            },
-            dir
-        })
-    , [
-        prefixes,
-        dir
-    ]);
-    return(/*#__PURE__*/ _jsxRuntime.jsx(Provider, {
-        value: contextValue,
-        children: children
-    }));
-}
-function useBootstrapPrefix(prefix, defaultPrefix) {
-    const { prefixes  } = _react.useContext(ThemeContext);
-    return prefix || prefixes[defaultPrefix] || defaultPrefix;
-}
-function useIsRTL() {
-    const { dir  } = _react.useContext(ThemeContext);
-    return dir === 'rtl';
-}
-function createBootstrapComponent(Component, opts) {
-    if (typeof opts === 'string') opts = {
-        prefix: opts
-    };
-    const isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
-    const { prefix , forwardRefAs =isClassy ? 'ref' : 'innerRef'  } = opts;
-    const Wrapped = /*#__PURE__*/ _react.forwardRef(({ ...props }, ref)=>{
-        props[forwardRefAs] = ref;
-        const bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
-        return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
-            ...props,
-            bsPrefix: bsPrefix
-        }));
-    });
-    Wrapped.displayName = `Bootstrap(${Component.displayName || Component.name})`;
-    return Wrapped;
-}
-exports.default = ThemeProvider;
-
-},{"react":"azLUo","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"eKf1H":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"eKf1H":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -29187,65 +29358,7 @@ var _react = require("react");
     );
 }
 
-},{"react":"azLUo","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"h3pDE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "useCol", ()=>useCol
-);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const DEVICE_SIZES = [
-    'xxl',
-    'xl',
-    'lg',
-    'md',
-    'sm',
-    'xs'
-];
-function useCol({ as , bsPrefix , className , ...props }) {
-    bsPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'col');
-    const spans = [];
-    const classes = [];
-    DEVICE_SIZES.forEach((brkPoint)=>{
-        const propValue = props[brkPoint];
-        delete props[brkPoint];
-        let span;
-        let offset;
-        let order;
-        if (typeof propValue === 'object' && propValue != null) ({ span , offset , order  } = propValue);
-        else span = propValue;
-        const infix = brkPoint !== 'xs' ? `-${brkPoint}` : '';
-        if (span) spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
-        if (order != null) classes.push(`order${infix}-${order}`);
-        if (offset != null) classes.push(`offset${infix}-${offset}`);
-    });
-    return [
-        {
-            ...props,
-            className: _classnamesDefault.default(className, ...spans, ...classes)
-        },
-        {
-            as,
-            bsPrefix,
-            spans
-        }
-    ];
-}
-const Col = /*#__PURE__*/ _react.forwardRef((props, ref)=>{
-    const [{ className , ...colProps }, { as: Component = 'div' , bsPrefix , spans  }] = useCol(props);
-    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ...colProps,
-        ref: ref,
-        className: _classnamesDefault.default(className, !spans.length && bsPrefix)
-    }));
-});
-Col.displayName = 'Col';
-exports.default = Col;
-
-},{"classnames":"6c3Gk","react":"azLUo","./ThemeProvider":"d8Vr0","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"62QvF":[function(require,module,exports) {
+},{"react":"azLUo","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"62QvF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -36165,45 +36278,6 @@ const Ratio = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , children
 Ratio.defaultProps = defaultProps;
 exports.default = Ratio;
 
-},{"classnames":"6c3Gk","react":"azLUo","./ThemeProvider":"d8Vr0","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"iMtLt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const DEVICE_SIZES = [
-    'xxl',
-    'xl',
-    'lg',
-    'md',
-    'sm',
-    'xs'
-];
-const Row = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = 'div' , ...props }, ref)=>{
-    const decoratedBsPrefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'row');
-    const sizePrefix = `${decoratedBsPrefix}-cols`;
-    const classes = [];
-    DEVICE_SIZES.forEach((brkPoint)=>{
-        const propValue = props[brkPoint];
-        delete props[brkPoint];
-        let cols;
-        if (propValue != null && typeof propValue === 'object') ({ cols  } = propValue);
-        else cols = propValue;
-        const infix = brkPoint !== 'xs' ? `-${brkPoint}` : '';
-        if (cols != null) classes.push(`${sizePrefix}${infix}-${cols}`);
-    });
-    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ref: ref,
-        ...props,
-        className: _classnamesDefault.default(className, decoratedBsPrefix, ...classes)
-    }));
-});
-Row.displayName = 'Row';
-exports.default = Row;
-
 },{"classnames":"6c3Gk","react":"azLUo","./ThemeProvider":"d8Vr0","react/jsx-runtime":"d3MWU","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C"}],"4VEDZ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -37375,7 +37449,7 @@ MovieCard.propTypes = {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"d3MWU","react":"azLUo","prop-types":"iSfL2","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP","react-bootstrap/Button":"3pRVo","react-bootstrap/Card":"lPCcY"}],"7WbPe":[function(require,module,exports) {
+},{"react/jsx-runtime":"d3MWU","react":"azLUo","prop-types":"iSfL2","react-bootstrap/Button":"3pRVo","react-bootstrap/Card":"lPCcY","@parcel/transformer-js/src/esmodule-helpers.js":"eg80C","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"29hoP"}],"7WbPe":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$ab0d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

@@ -1,4 +1,14 @@
 
+#login-button {
+  background-color: blue;
+  border: none;
+  color: white;
+  margin-top: 10px;
+}
+button {
+  color: steelblue;
+}
+
 
 .my-flix {
   color: steelblue;

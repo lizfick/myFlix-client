@@ -28,9 +28,8 @@ export function RegistrationView(props) {
           alert('Registration successful, please login!');
           window.open('/', '_self');
         })
-        .catch(response => {
-          console.error(response);
-          alert('Unable to register');
+        .catch(e => {
+          console.log('error registering the user')
         });
     }
   };
