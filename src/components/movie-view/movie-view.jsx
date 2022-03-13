@@ -1,4 +1,14 @@
 import React from 'react';
+// app
+import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Link } from 'react-router-dom';
+// styling
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
 
 export class MovieView extends React.Component {
 

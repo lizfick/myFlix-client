@@ -1,0 +1,27 @@
+button {
+  color: steelblue;
+}
+#login-button {
+  background-color: blue;
+  border: none;
+  color: white;
+  margin-top: 10px;
+}
+
+
+
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ABB2B9;
+  color: #ffffff;
+}
+.my-flix {
+  color: steelblue;
+}
+
+.movie-poster {
+  width: 200px;
+}
+/*# sourceMappingURL=index.3bb28fe2.css.map */
