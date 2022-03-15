@@ -2,12 +2,51 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './registration-view.scss';
 import axios from 'axios';
+import { Container, Col, Row, Card, CardGroup, Form, Button } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [Birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState('');
+
+  // Declare hook for each input
+  const [usernameErr, setUsernameErr] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+
+  // validate user inputs
+  const validate = () => {
+    let isReq = true;
+
+    if (!username) {
+      setUsernameErr('Username required');
+      isReq = false;
+    } else if (username.length < 2) {
+      setUsernameErr('Username must be at least 2 characters long');
+      isReq = false;
+    }
+    if (!password) {
+      setPasswordErr('Password required');
+      isReq = false;
+    } else if (password.length < 6) {
+      setPassword('Password must be at least 6 characters long');
+      isReq = false;
+    }
+    if (!email) {
+      setEmailErr('Email required');
+      isReq = false;
+    } else if (email.indexOf('@') === -1) {
+      setEmail('Email must be valid');
+      isReq = false;
+    }
+    if (!birthday) {
+      setPasswordErr('Birthday required');
+      isReq = false;
+    }
+
+    return isReq;
+  }
 
 
   const handleSubmit = (e) => {
@@ -57,8 +96,8 @@ export function RegistrationView(props) {
                       value={username}
                       onChange={e => setUsername(e.target.value)}
                       placeholder="*required field"
-                      required
-                    />
+                      required />
+                    {usernameErr && <p>{usernameErr}</p>}
                   </Form.Group>
 
                   <Form.Group>
@@ -68,8 +107,8 @@ export function RegistrationView(props) {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       placeholder="*required field"
-                      required
-                    />
+                      required />
+                    {passwordErr && <p>{passwordErr}</p>}
                   </Form.Group>
 
                   <Form.Group>
@@ -79,8 +118,8 @@ export function RegistrationView(props) {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="*required field"
-                      required
-                    />
+                      required />
+                    {emailErr && <p>{emailErr}</p>}
                   </Form.Group>
 
                   <Form.Group>
@@ -88,7 +127,7 @@ export function RegistrationView(props) {
                     <Form.Control
                       className="mb-3"
                       type="date"
-                      value={Birthday}
+                      value={birthday}
                       onChange={e => setBirthday(e.target.value)}
                     />
                   </Form.Group>

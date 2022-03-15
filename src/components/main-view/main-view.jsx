@@ -3,7 +3,7 @@
 // app
 import React from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // components
 import { RegistrationView } from '../registration-view/registration-view';
@@ -88,23 +88,10 @@ export class MainView extends React.Component {
   render() {
     const { movies, user } = this.state;
 
-    if (!user) {
-      return (
-        <Row>
-          <Col>
-            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-          </Col>
-        </Row>
-      )
-    }
-
     return (
-      <Router>
+      <>
         <NavbarView user={user} />
         <Row className="main-view justify-content-md-center">
-
-          {/* <div className="main-view"> */}
-
 
           <Route exact path="/" render={() => {
             if (!user) {
@@ -130,10 +117,11 @@ export class MainView extends React.Component {
           }} />
 
           <Route path="/register" render={() => {
-            if (user) return <Redirect to="/" />
-            return <Col>
-              <RegistrationView />
-            </Col>
+            return (
+              <Col>
+                <RegistrationView />
+              </Col>
+            )
           }} />
 
           <Route path="/profile" render={({ history }) => {
@@ -173,11 +161,8 @@ export class MainView extends React.Component {
             </Col>
           }} />
 
-
-          {/* </div> */}
-
         </Row>
-      </Router>
+      </>
     );
   }
 }
