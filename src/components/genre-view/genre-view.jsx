@@ -23,7 +23,7 @@ export class GenreView extends React.Component {
               <span className="value">{Genre.Description}</span>
             </div>
             <Link to={`/`}>
-              <Button onClick={() => onBackClick(null)} variant="light" style={{ color: "white" }}>Back</Button>
+              <Button onClick={() => onBackClick(null)}>Back</Button>
             </Link>
           </Card.Body>
         </Card>

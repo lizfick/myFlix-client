@@ -67,8 +67,9 @@ export function RegistrationView(props) {
           alert('Registration successful, please login!');
           window.open('/', '_self');
         })
-        .catch(e => {
-          console.log('error registering the user')
+        .catch(response => {
+          console.error(response);
+          alert('error registering the user')
         });
     }
   };
@@ -85,8 +86,8 @@ export function RegistrationView(props) {
           <CardGroup>
             <Card className="registerCard">
               <Card.Body>
-                <Card.Title className="text-center">Welcome to myFlix!</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted text-center">Register here!</Card.Subtitle>
+                <Card.Title className="text-center">Welcome to myFlix</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted text-center">Register here</Card.Subtitle>
 
                 <Form>
                   <Form.Group>

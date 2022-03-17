@@ -1,8 +1,23 @@
-$buttonColor: blue;
+// $buttonColor: blue;
 
-#login-button {
-  background-color: $buttonColor;
-  border: none;
-  color: white;
-  margin-top: 10px;
+// #login-button {
+//   background-color: $buttonColor;
+//   border: none;
+//   color: white;
+//   margin-top: 10px;
+// }
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #353535;
+  color: #ffffff;
+}
+
+body {
+  padding: inherit;
+}
+
+.form-control {
+  background-color: #d9d9d9;
 }

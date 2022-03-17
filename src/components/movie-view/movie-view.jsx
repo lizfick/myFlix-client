@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Container } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import './movie-view.scss';
 
 
 export class MovieView extends React.Component {
