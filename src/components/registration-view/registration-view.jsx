@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './registration-view.scss';
 import axios from 'axios';
 import { Container, Col, Row, Card, CardGroup, Form, Button } from 'react-bootstrap';
 
 export function RegistrationView(props) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +15,13 @@ export function RegistrationView(props) {
   const [usernameErr, setUsernameErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   const [emailErr, setEmailErr] = useState('');
+
+  const [updateSuccess, setUpdateSuccess] = useState('');
+  const [updateFail, setUpdateFail] = useState('');
+
+  const formattedBirthday = birthday.slice(0, 10);
+
+  // if (!userData || userData.username === undefined) return <div className='load'>Loading...</div>
 
   // validate user inputs
   const validate = () => {
@@ -48,14 +56,12 @@ export function RegistrationView(props) {
     return isReq;
   }
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
       /* Send request to the server for authentication */
-
-      axios.post('https://myflixapi-0196.herokuapp.com/users', {
+      axios.post(`https://myflixapi-0196.herokuapp.com/users/`, {
         Username: username,
         Password: password,
         Email: email,
@@ -69,10 +75,24 @@ export function RegistrationView(props) {
         })
         .catch(response => {
           console.error(response);
-          alert('error registering the user')
+          alert('Unable to register');
         });
     }
   };
+
+
+  if (updateSuccess !== '' || updateFail !== '' || usernameErr !== '' || passwordErr !== '' || emailErr !== '') {
+    setTimeout(
+      () => {
+        setUpdateSuccess('')
+        setUpdateFail('')
+        setUsernameErr('')
+        setPasswordErr('')
+        setEmailErr('')
+      },
+      5000
+    );
+  }
 
 
   return (

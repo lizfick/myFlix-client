@@ -60,7 +60,7 @@ export class ProfileView extends React.Component {
 
     axios
       .put(
-        `https://orishflix.herokuapp.com/users/${Username}`,
+        `https://myflixapi-0196.herokuapp.com/users/${Username}`,
         {
           Username: this.state.Username,
           Password: this.state.Password,
@@ -159,7 +159,7 @@ export class ProfileView extends React.Component {
   // render function to display items on DOM
   render() {
     const { movies, onBackClick } = this.props;
-    const { FavoriteMovies, Username, Email, Birthday } = this.state;
+    const { FavoriteMovies, Username, Password, Email, Birthday } = this.state;
 
 
     return (
@@ -199,7 +199,7 @@ export class ProfileView extends React.Component {
                       type="password"
                       name="Password"
                       placeholder="New Password"
-                      value={""}
+                      value={Password}
                       onChange={(e) => this.setPassword(e.target.value)}
                       required
                     />

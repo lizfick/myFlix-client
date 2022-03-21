@@ -27710,6 +27710,10 @@ function RegistrationView(props) {
     const [usernameErr, setUsernameErr] = _react.useState('');
     const [passwordErr, setPasswordErr] = _react.useState('');
     const [emailErr, setEmailErr] = _react.useState('');
+    const [updateSuccess, setUpdateSuccess] = _react.useState('');
+    const [updateFail, setUpdateFail] = _react.useState('');
+    const formattedBirthday = birthday.slice(0, 10);
+    // if (!userData || userData.username === undefined) return <div className='load'>Loading...</div>
     // validate user inputs
     const validate = ()=>{
         let isReq = true;
@@ -27743,7 +27747,7 @@ function RegistrationView(props) {
     const handleSubmit = (e)=>{
         e.preventDefault();
         const isReq = validate();
-        if (isReq) /* Send request to the server for authentication */ _axiosDefault.default.post('https://myflixapi-0196.herokuapp.com/users', {
+        if (isReq) /* Send request to the server for authentication */ _axiosDefault.default.post(`https://myflixapi-0196.herokuapp.com/users/`, {
             Username: username,
             Password: password,
             Email: email,
@@ -27755,9 +27759,16 @@ function RegistrationView(props) {
             window.open('/', '_self');
         }).catch((response)=>{
             console.error(response);
-            alert('error registering the user');
+            alert('Unable to register');
         });
     };
+    if (updateSuccess !== '' || updateFail !== '' || usernameErr !== '' || passwordErr !== '' || emailErr !== '') setTimeout(()=>{
+        setUpdateSuccess('');
+        setUpdateFail('');
+        setUsernameErr('');
+        setPasswordErr('');
+        setEmailErr('');
+    }, 5000);
     return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Container, {
         className: "registerContainer",
         children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Row, {
@@ -27772,7 +27783,7 @@ function RegistrationView(props) {
                                     children: "Welcome to myFlix"
                                 }, void 0, false, {
                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                    lineNumber: 89,
+                                    lineNumber: 109,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Card.Subtitle, {
@@ -27780,7 +27791,7 @@ function RegistrationView(props) {
                                     children: "Register here"
                                 }, void 0, false, {
                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                    lineNumber: 90,
+                                    lineNumber: 110,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form, {
@@ -27791,7 +27802,7 @@ function RegistrationView(props) {
                                                     children: "Username"
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 94,
+                                                    lineNumber: 114,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -27803,20 +27814,20 @@ function RegistrationView(props) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 95,
+                                                    lineNumber: 115,
                                                     columnNumber: 21
                                                 }, this),
                                                 usernameErr && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                                                     children: usernameErr
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 101,
+                                                    lineNumber: 121,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/registration-view/registration-view.jsx",
-                                            lineNumber: 93,
+                                            lineNumber: 113,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Group, {
@@ -27825,7 +27836,7 @@ function RegistrationView(props) {
                                                     children: "Password"
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 105,
+                                                    lineNumber: 125,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -27837,20 +27848,20 @@ function RegistrationView(props) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 106,
+                                                    lineNumber: 126,
                                                     columnNumber: 21
                                                 }, this),
                                                 passwordErr && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                                                     children: passwordErr
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 112,
+                                                    lineNumber: 132,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/registration-view/registration-view.jsx",
-                                            lineNumber: 104,
+                                            lineNumber: 124,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Group, {
@@ -27859,7 +27870,7 @@ function RegistrationView(props) {
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 116,
+                                                    lineNumber: 136,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -27871,20 +27882,20 @@ function RegistrationView(props) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 117,
+                                                    lineNumber: 137,
                                                     columnNumber: 21
                                                 }, this),
                                                 emailErr && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                                                     children: emailErr
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 123,
+                                                    lineNumber: 143,
                                                     columnNumber: 34
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/registration-view/registration-view.jsx",
-                                            lineNumber: 115,
+                                            lineNumber: 135,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Group, {
@@ -27893,7 +27904,7 @@ function RegistrationView(props) {
                                                     children: "Birthday"
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 127,
+                                                    lineNumber: 147,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Form.Control, {
@@ -27903,13 +27914,13 @@ function RegistrationView(props) {
                                                     onChange: (e)=>setBirthday(e.target.value)
                                                 }, void 0, false, {
                                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                                    lineNumber: 128,
+                                                    lineNumber: 148,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/registration-view/registration-view.jsx",
-                                            lineNumber: 126,
+                                            lineNumber: 146,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
@@ -27921,48 +27932,48 @@ function RegistrationView(props) {
                                             children: "Register"
                                         }, void 0, false, {
                                             fileName: "src/components/registration-view/registration-view.jsx",
-                                            lineNumber: 136,
+                                            lineNumber: 156,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "src/components/registration-view/registration-view.jsx",
-                                    lineNumber: 92,
+                                    lineNumber: 112,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "src/components/registration-view/registration-view.jsx",
-                            lineNumber: 88,
+                            lineNumber: 108,
                             columnNumber: 15
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/registration-view/registration-view.jsx",
-                        lineNumber: 87,
+                        lineNumber: 107,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/registration-view/registration-view.jsx",
-                    lineNumber: 86,
+                    lineNumber: 106,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/registration-view/registration-view.jsx",
-                lineNumber: 85,
+                lineNumber: 105,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/components/registration-view/registration-view.jsx",
-            lineNumber: 84,
+            lineNumber: 104,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/components/registration-view/registration-view.jsx",
-        lineNumber: 81,
+        lineNumber: 101,
         columnNumber: 5
     }, this));
 }
-_s(RegistrationView, "inh2D4xaKqr2dNam+Xg8BctszGI=");
+_s(RegistrationView, "wMe4e89MVazt1AtpfMxG3c412w4=");
 _c = RegistrationView;
 RegistrationView.propTypes = {
     register: _propTypesDefault.default.shape({
@@ -35636,6 +35647,11 @@ function isModifiedEvent(event) {
 }
 const getRefTarget = (ref)=>ref && ('current' in ref ? ref.current : ref)
 ;
+const InitialTriggerEvents = {
+    click: 'mousedown',
+    mouseup: 'mousedown',
+    pointerup: 'pointerdown'
+};
 /**
  * The `useClickOutside` hook registers your callback on the document that fires
  * when a pointer event is registered outside of the provided ref or element.
@@ -35648,13 +35664,19 @@ const getRefTarget = (ref)=>ref && ('current' in ref ? ref.current : ref)
  */ function useClickOutside(ref, onClickOutside = noop, { disabled , clickTrigger ='click'  } = {
 }) {
     const preventMouseClickOutsideRef = _react.useRef(false);
+    const waitingForTrigger = _react.useRef(false);
     const handleMouseCapture = _react.useCallback((e)=>{
         const currentTarget = getRefTarget(ref);
         _warningDefault.default(!!currentTarget, "ClickOutside captured a close event but does not have a ref to compare it to. useClickOutside(), should be passed a ref that resolves to a DOM node");
-        preventMouseClickOutsideRef.current = !currentTarget || isModifiedEvent(e) || !isLeftClickEvent(e) || !!_containsDefault.default(currentTarget, e.target);
+        preventMouseClickOutsideRef.current = !currentTarget || isModifiedEvent(e) || !isLeftClickEvent(e) || !!_containsDefault.default(currentTarget, e.target) || waitingForTrigger.current;
+        waitingForTrigger.current = false;
     }, [
         ref
     ]);
+    const handleInitialMouse = _useEventCallbackDefault.default((e)=>{
+        const currentTarget = getRefTarget(ref);
+        if (currentTarget && _containsDefault.default(currentTarget, e.target)) waitingForTrigger.current = true;
+    });
     const handleMouse = _useEventCallbackDefault.default((e)=>{
         if (!preventMouseClickOutsideRef.current) onClickOutside(e);
     });
@@ -35662,7 +35684,10 @@ const getRefTarget = (ref)=>ref && ('current' in ref ? ref.current : ref)
         if (disabled || ref == null) return undefined;
         const doc = _ownerDocumentDefault.default(getRefTarget(ref)); // Store the current event to avoid triggering handlers immediately
         // https://github.com/facebook/react/issues/20074
-        let currentEvent = (doc.defaultView || window).event; // Use capture for this listener so it fires before React's listener, to
+        let currentEvent = (doc.defaultView || window).event;
+        let removeInitialTriggerListener = null;
+        if (InitialTriggerEvents[clickTrigger]) removeInitialTriggerListener = _listenDefault.default(doc, InitialTriggerEvents[clickTrigger], handleInitialMouse, true);
+         // Use capture for this listener so it fires before React's listener, to
         // avoid false positives in the contains() check below if the target DOM
         // element is removed in the React mouse callback.
         const removeMouseCaptureListener = _listenDefault.default(doc, clickTrigger, handleMouseCapture, true);
@@ -35678,6 +35703,7 @@ const getRefTarget = (ref)=>ref && ('current' in ref ? ref.current : ref)
         if ('ontouchstart' in doc.documentElement) mobileSafariHackListeners = [].slice.call(doc.body.children).map((el)=>_listenDefault.default(el, 'mousemove', noop)
         );
         return ()=>{
+            removeInitialTriggerListener == null || removeInitialTriggerListener();
             removeMouseCaptureListener();
             removeMouseListener();
             mobileSafariHackListeners.forEach((remove)=>remove()
@@ -35688,6 +35714,7 @@ const getRefTarget = (ref)=>ref && ('current' in ref ? ref.current : ref)
         disabled,
         clickTrigger,
         handleMouseCapture,
+        handleInitialMouse,
         handleMouse
     ]);
 }
@@ -41032,8 +41059,70 @@ var _colDefault = parcelHelpers.interopDefault(_col);
 var _reactBootstrap = require("react-bootstrap");
 var _movieViewScss = require("./movie-view.scss");
 class MovieView extends _reactDefault.default.Component {
+    constructor(props){
+        super(props);
+        // creates state variables that will be used to add/remove a movie from a users Favorites list
+        this.state = {
+            FavoriteMovies: [],
+            userDetails: []
+        };
+        this.addFavorite = this.addFavorite.bind(this);
+        this.removeFavorite = this.removeFavorite.bind(this);
+        this.getUserDetails = this.getUserDetails.bind(this);
+    }
+    componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        this.getUserDetails(accessToken);
+    }
+    getUserDetails() {
+        let user = localStorage.getItem('user');
+        let token = localStorage.getItem('token');
+        _axiosDefault.default.get(`https://myflixapi-0196.herokuapp.com/users/${user}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response.data);
+            this.props.setUser(response.user);
+            this.setState({
+                userDetails: response.data,
+                FavoriteMovies: response.data.FavoriteMovies
+            });
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    addFavorite() {
+        let token = localStorage.getItem('token');
+        _axiosDefault.default.post(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            window.open(`/movies/${this.props.movie._id}`, '_self');
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+    removeFavorite() {
+        let token = localStorage.getItem('token');
+        _axiosDefault.default.delete(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            window.open(`/movies/${this.props.movie._id}`, '_self');
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
     render() {
         const { movie , onBackClick  } = this.props;
+        let tempArray = this.state.FavoriteMovies;
+        let isFavoriteNew = false;
+        if (tempArray.includes(this.props.movie._id)) isFavoriteNew = true;
+        else isFavoriteNew = false;
         return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Container, {
             fluid: true,
             className: "moviesContainer",
@@ -41048,12 +41137,12 @@ class MovieView extends _reactDefault.default.Component {
                                     src: movie.ImagePath
                                 }, void 0, false, {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 25,
+                                    lineNumber: 91,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 24,
+                                lineNumber: 90,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -41064,7 +41153,7 @@ class MovieView extends _reactDefault.default.Component {
                                         children: "Title: "
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 28,
+                                        lineNumber: 94,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
@@ -41072,13 +41161,13 @@ class MovieView extends _reactDefault.default.Component {
                                         children: movie.Title
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 29,
+                                        lineNumber: 95,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 27,
+                                lineNumber: 93,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -41089,7 +41178,7 @@ class MovieView extends _reactDefault.default.Component {
                                         children: "Description: "
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 32,
+                                        lineNumber: 98,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
@@ -41097,13 +41186,13 @@ class MovieView extends _reactDefault.default.Component {
                                         children: movie.Description
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 33,
+                                        lineNumber: 99,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 31,
+                                lineNumber: 97,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -41114,7 +41203,7 @@ class MovieView extends _reactDefault.default.Component {
                                         children: "Genre: "
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 36,
+                                        lineNumber: 102,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Link, {
@@ -41124,18 +41213,18 @@ class MovieView extends _reactDefault.default.Component {
                                             children: movie.Genre.Name
                                         }, void 0, false, {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 38,
+                                            lineNumber: 104,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 37,
+                                        lineNumber: 103,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 35,
+                                lineNumber: 101,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -41146,7 +41235,7 @@ class MovieView extends _reactDefault.default.Component {
                                         children: "Director: "
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 42,
+                                        lineNumber: 108,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Link, {
@@ -41156,49 +41245,67 @@ class MovieView extends _reactDefault.default.Component {
                                             children: movie.Director.Name
                                         }, void 0, false, {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 44,
+                                            lineNumber: 110,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "src/components/movie-view/movie-view.jsx",
-                                        lineNumber: 43,
+                                        lineNumber: 109,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 41,
+                                lineNumber: 107,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                                variant: "outline-light",
+                                onClick: this.removeFavorite,
+                                children: " Remove from Favorites "
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 114,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
+                                variant: "outline-light",
+                                onClick: this.addFavorite,
+                                children: " Add to Favorites "
+                            }, void 0, false, {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 115,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Button, {
                                 variant: "outline-light",
                                 onClick: ()=>onBackClick(null)
                                 ,
-                                children: "Back"
+                                children: " Back "
                             }, void 0, false, {
                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 48,
+                                lineNumber: 116,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 23,
+                        lineNumber: 89,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 22,
+                    lineNumber: 88,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 21,
+                lineNumber: 87,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/components/movie-view/movie-view.jsx",
-            lineNumber: 20,
+            lineNumber: 86,
             columnNumber: 7
         }, this));
     }
@@ -41582,7 +41689,7 @@ class ProfileView extends _reactDefault.default.Component {
         e.preventDefault();
         const Username = localStorage.getItem('user');
         const token = localStorage.getItem('token');
-        _axiosDefault.default.put(`https://orishflix.herokuapp.com/users/${Username}`, {
+        _axiosDefault.default.put(`https://myflixapi-0196.herokuapp.com/users/${Username}`, {
             Username: this.state.Username,
             Password: this.state.Password,
             Email: this.state.Email,
@@ -41663,7 +41770,7 @@ class ProfileView extends _reactDefault.default.Component {
     // render function to display items on DOM
     render() {
         const { movies , onBackClick  } = this.props;
-        const { FavoriteMovies , Username , Email , Birthday  } = this.state;
+        const { FavoriteMovies , Username , Password , Email , Birthday  } = this.state;
         return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactBootstrap.Container, {
             className: "profile-view",
             align: "center",
@@ -41727,7 +41834,7 @@ class ProfileView extends _reactDefault.default.Component {
                                                         type: "password",
                                                         name: "Password",
                                                         placeholder: "New Password",
-                                                        value: "",
+                                                        value: Password,
                                                         onChange: (e)=>this.setPassword(e.target.value)
                                                         ,
                                                         required: true

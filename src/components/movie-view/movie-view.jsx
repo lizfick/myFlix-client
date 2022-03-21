@@ -13,8 +13,74 @@ import './movie-view.scss';
 
 export class MovieView extends React.Component {
 
+  constructor(props) {
+    super(props);
+    // creates state variables that will be used to add/remove a movie from a users Favorites list
+    this.state = {
+      FavoriteMovies: [],
+      userDetails: []
+    }
+
+    this.addFavorite = this.addFavorite.bind(this);
+    this.removeFavorite = this.removeFavorite.bind(this);
+    this.getUserDetails = this.getUserDetails.bind(this);
+  }
+
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    this.getUserDetails(accessToken);
+  }
+
+  getUserDetails() {
+    let user = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
+    axios.get(`https://myflixapi-0196.herokuapp.com/users/${user}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then((response) => {
+      console.log(response.data);
+      this.props.setUser(response.user);
+      this.setState({
+        userDetails: response.data,
+        FavoriteMovies: response.data.FavoriteMovies
+      });
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  addFavorite() {
+    let token = localStorage.getItem('token');
+    axios.post(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(response => {
+      window.open(`/movies/${this.props.movie._id}`, '_self');
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  removeFavorite() {
+    let token = localStorage.getItem('token');
+    axios.delete(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(response => {
+      window.open(`/movies/${this.props.movie._id}`, '_self');
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+
   render() {
     const { movie, onBackClick } = this.props;
+
+    let tempArray = this.state.FavoriteMovies;
+    let isFavoriteNew = false
+    if (tempArray.includes(this.props.movie._id)) {
+      isFavoriteNew = true;
+    } else {
+      isFavoriteNew = false;
+    };
 
     return (
       <Container fluid className="moviesContainer">
@@ -45,7 +111,9 @@ export class MovieView extends React.Component {
                 </Link>
               </div>
 
-              <Button variant="outline-light" onClick={() => onBackClick(null)}>Back</Button>
+              <Button variant='outline-light' onClick={this.removeFavorite}> Remove from Favorites </Button>
+              <Button variant='outline-light' onClick={this.addFavorite}> Add to Favorites </Button>
+              <Button variant="outline-light" onClick={() => onBackClick(null)}> Back </Button>
 
             </div>
           </Col>
