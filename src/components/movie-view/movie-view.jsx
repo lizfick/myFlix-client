@@ -12,7 +12,6 @@ import './movie-view.scss';
 
 
 export class MovieView extends React.Component {
-
   constructor(props) {
     super(props);
     // creates state variables that will be used to add/remove a movie from a users Favorites list
@@ -48,12 +47,21 @@ export class MovieView extends React.Component {
     });
   }
 
-  addFavorite() {
+  async addFavorite() {
+    let user = localStorage.getItem('user');
     let token = localStorage.getItem('token');
-    axios.post(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {}, {
+    console.log(user)
+    console.log(this.props)
+    await axios.post(`https://myflixapi-0196.herokuapp.com/users/${user}/movies/${this.props.movie._id}`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(response => {
-      window.open(`/movies/${this.props.movie._id}`, '_self');
+      this.getUserDetails(token);
+      window.location.pathname = "/";
+      const data = response.data;
+      localStorage.updateUser('user', data.FavoriteMovies);
+      localStorage.setItem('user', response.data.Username);
+      window.alert('Success!')
+      window.location.pathname = "/";
     }).catch(function (error) {
       console.log(error);
     });
@@ -64,7 +72,11 @@ export class MovieView extends React.Component {
     axios.delete(`https://myflixapi-0196.herokuapp.com/users/${this.props.user}/movies/${this.props.movie._id}`, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(response => {
-      window.open(`/movies/${this.props.movie._id}`, '_self');
+      window.location.pathname = "/";
+      const data = response.data;
+      localStorage.setItem('user', data.Username);
+      window.alert('Success!')
+      window.location.pathname = "/";
     }).catch(function (error) {
       console.log(error);
     });
@@ -73,7 +85,6 @@ export class MovieView extends React.Component {
 
   render() {
     const { movie, onBackClick } = this.props;
-
     let tempArray = this.state.FavoriteMovies;
     let isFavoriteNew = false
     if (tempArray.includes(this.props.movie._id)) {
@@ -111,8 +122,8 @@ export class MovieView extends React.Component {
                 </Link>
               </div>
 
-              <Button variant='outline-light' onClick={this.removeFavorite}> Remove from Favorites </Button>
-              <Button variant='outline-light' onClick={this.addFavorite}> Add to Favorites </Button>
+              <Button variant='outline-light' onClick={() => this.removeFavorite()}> Remove from Favorites </Button>
+              <Button variant='outline-light' onClick={() => this.addFavorite()}> Add to Favorites </Button>
               <Button variant="outline-light" onClick={() => onBackClick(null)}> Back </Button>
 
             </div>

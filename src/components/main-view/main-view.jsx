@@ -119,7 +119,7 @@ export class MainView extends React.Component {
           <Route path="/register" render={() => {
             return (
               <Col>
-                <RegistrationView />
+                <RegistrationView Username={user} />
               </Col>
             )
           }} />
