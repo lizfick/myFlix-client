@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onMovieClick } = this.props;
+    const { movie } = this.props;
 
     return (
-      <Card>
-        <Card.Img variant="top" src={movie.ImagePath} crossOrigin="anoymous" className='movie-poster' style={{ width: '100px' }} />
+      <Card style={{ marginBottom: '20px' }}>
+        <Card.Img variant="top" src={movie.ImagePath} crossOrigin="anoymous" className='movie-poster' />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
